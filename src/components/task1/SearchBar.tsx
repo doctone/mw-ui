@@ -1,12 +1,14 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useContext, useState } from 'react';
 
 import { useQuery } from '@tanstack/react-query';
 import Fuse from 'fuse.js';
-import styles from './Task1.module.scss';
+import styles from './SearchBar.module.scss';
+import { SelectionContext } from '../app/hooks/useSelection';
 
 // Please refer to task 1. Realtime search of readme.md
-const Task1: React.FC = () => {
+const SearchBar: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const { setSelection } = useContext(SelectionContext);
   const [tags, setTags] = useState([]);
   const [isFocused, setIsFocused] = useState(false);
 
@@ -43,6 +45,7 @@ const Task1: React.FC = () => {
                 className={styles.suggestion}
                 onClick={() => {
                   setSearchTerm(tag);
+                  setSelection(tag);
                 }}
               >
                 {tag}
@@ -55,4 +58,4 @@ const Task1: React.FC = () => {
   );
 };
 
-export default Task1;
+export default SearchBar;

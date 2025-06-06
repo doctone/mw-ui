@@ -1,0 +1,42 @@
+@use '../../styles/core' as core;
+
+.container {
+  padding: 20px;
+  color: black;
+}
+
+.searchBox {
+  position: relative;
+  width: 300px;
+}
+
+.input {
+  width: 100%; /* Takes full width of parent container */
+  padding: 10px; /* Adds internal spacing around text */
+  border: 1px solid #ccc; /* Light gray border with 1px thickness */
+  border-radius: 4px; /* Slightly rounded corners */
+  font-size: 16px; /* Text size for better readability */
+}
+
+.dropdown {
+  position: absolute; /* Takes the element out of normal document flow */
+  top: 100%; /* Positions dropdown just below its parent */
+  left: 0; /* Aligns to the left edge of parent */
+  width: 100%; /* Takes full width of parent container */
+  background: white; /* White background for dropdown */
+  border: 1px solid #ccc; /* Light gray border with 1px thickness */
+  border-top: none; /* Removes top border to connect with input field */
+  border-radius: 0 0 4px 4px; /* Rounds only bottom corners */
+  max-height: 200px; /* Limits height for long suggestion lists */
+  overflow-y: auto; /* Adds vertical scrollbar when content overflows */
+  z-index: 10; /* Ensures dropdown appears above other elements */
+}
+
+.suggestion {
+  padding: 10px; /* Adds internal spacing around each suggestion */
+  cursor: pointer; /* Changes cursor to pointer on hover */
+
+  &:hover {
+    background-color: #f2f2f2; /* Light gray background on hover for visual feedback */
+  }
+}

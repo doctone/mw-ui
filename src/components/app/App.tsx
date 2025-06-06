@@ -3,6 +3,8 @@ import Header from '../header/Header';
 import Task2 from '../task2/Task2';
 
 import styles from './App.module.scss';
+import { useState } from 'react';
+import { SelectionContext } from './hooks/useSelection';
 
 /*
  * Available endpoints
@@ -14,15 +16,16 @@ import styles from './App.module.scss';
 const client = new QueryClient();
 
 const App: React.FC = () => {
+  const [selection, setSelection] = useState();
   return (
-    <>
+    <SelectionContext.Provider value={{ selection, setSelection }}>
       <QueryClientProvider client={client}>
         <Header />
         <main className={styles.main}>
           <Task2 />
         </main>
       </QueryClientProvider>
-    </>
+    </SelectionContext.Provider>
   );
 };
 
