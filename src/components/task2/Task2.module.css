@@ -24,3 +24,19 @@
     cursor: pointer;
   }
 }
+
+.label {
+  margin: 2em 0 2em 0;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  justify-content: center;
+  align-items: center;
+
+  h1 {
+    font-size: x-large;
+  }
+}
