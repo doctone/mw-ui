@@ -1,7 +1,6 @@
 import React, { ChangeEvent, useContext, useState } from 'react';
+import { useDebouncedCallback } from 'use-debounce';
 
-import { useQuery } from '@tanstack/react-query';
-import Fuse from 'fuse.js';
 import styles from './SearchBar.module.scss';
 import { SelectionContext } from '../app/hooks/useSelection';
 
@@ -12,16 +11,19 @@ const SearchBar: React.FC = () => {
   const [tags, setTags] = useState([]);
   const [isFocused, setIsFocused] = useState(false);
 
-  const { data } = useQuery({
-    queryKey: ['tags'],
-    queryFn: () => fetch('http://localhost:8000/api/tags').then((res) => res.json()),
-  });
+  const debouncedSearch = useDebouncedCallback((term) => {
+    if (term.length >= 2) {
+      fetch(`http://localhost:8000/api/tags?tag=${encodeURIComponent(term)}`)
+        .then((res) => res.json())
+        .then((results) => setTags(results));
+    } else {
+      setTags([]);
+    }
+  }, 300);
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
-    const fuse = new Fuse<string>(data);
-    const result = fuse.search(searchTerm);
-    setTags(result.map(({ item }) => item));
+    debouncedSearch(e.target.value);
   };
 
   return (
