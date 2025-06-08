@@ -12,6 +12,7 @@ const Task2: React.FC = () => {
   const { data } = useQuery<{ cars: { url: string; id: string }[] }>({
     queryKey: ['cars', selection],
     queryFn: () => fetch(`http://localhost:8000/api/cars?${params}`).then((res) => res.json()),
+    enabled: !!selection,
   });
 
   if (!selection) {

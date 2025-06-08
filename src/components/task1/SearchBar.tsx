@@ -12,7 +12,7 @@ const SearchBar: React.FC = () => {
   const [isFocused, setIsFocused] = useState(false);
 
   const debouncedSearch = useDebouncedCallback((term) => {
-    if (term.length >= 2) {
+    if (term?.length >= 2) {
       fetch(`http://localhost:8000/api/tags?tag=${encodeURIComponent(term)}`)
         .then((res) => res.json())
         .then((results) => setTags(results));
@@ -42,7 +42,7 @@ const SearchBar: React.FC = () => {
         {isFocused && (
           <div className={styles.dropdown}>
             {tags.map((tag) => (
-              <div
+              <option
                 key={tag}
                 className={styles.suggestion}
                 onClick={() => {
@@ -51,7 +51,7 @@ const SearchBar: React.FC = () => {
                 }}
               >
                 {tag}
-              </div>
+              </option>
             ))}
           </div>
         )}
