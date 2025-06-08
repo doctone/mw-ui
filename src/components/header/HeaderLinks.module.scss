@@ -21,3 +21,9 @@
     width: core.$space * 2;
   }
 }
+
+@media (max-width: 600px) {
+  .links {
+    gap: core.$space * 2;
+  }
+}

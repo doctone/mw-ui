@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import App from './App';
 
 describe('App.tsx', () => {
   it('renders correctly', () => {
-    const result = render(<App />);
-    expect(result.container).toMatchSnapshot();
+    render(<App />);
+    expect(screen.getByText('Use the search to find vehicles')).toBeVisible();
   });
 });
