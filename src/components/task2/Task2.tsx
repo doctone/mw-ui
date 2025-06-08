@@ -4,14 +4,12 @@ import { useQuery } from '@tanstack/react-query';
 import styles from './Task2.module.css';
 import SearchIcon from '../../assets/icons/search.svg?react';
 
-// Please refer to task 2. Realtime search results of readme.md
 const Task2: React.FC = () => {
   const { selection } = useContext(SelectionContext);
 
   const params = new URLSearchParams({ tag: selection, limit: '9' }).toString();
-  // const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  const { data } = useQuery<{ url: string; id: string }[]>({
+  const { data } = useQuery<{ cars: { url: string; id: string }[] }>({
     queryKey: ['cars', selection],
     queryFn: () => fetch(`http://localhost:8000/api/cars?${params}`).then((res) => res.json()),
   });
@@ -35,7 +33,7 @@ const Task2: React.FC = () => {
         </div>
       )}
       <div className={styles.grid}>
-        {data?.map((car) => {
+        {data?.cars.map((car) => {
           return (
             <div key={car.id} className={styles.imgContainer}>
               <picture>
