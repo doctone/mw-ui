@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
@@ -11,32 +11,30 @@ describe('App.tsx', () => {
     expect(screen.getByText('Use the search to find vehicles')).toBeVisible();
   });
 
-  it('allows the user to search for tags', async () => {
+  it('renders a default message when no cars are returned', async () => {
     const user = userEvent.setup();
-    const paramsSpy = vi.fn();
 
     server.use(
       http.get(`${BASE_URL}/api/tags`, () => {
-        return HttpResponse.json(['red']);
+        return HttpResponse.json(['ferrari']);
       }),
-      http.get(`${BASE_URL}/api/cars`, ({ request }) => {
-        const url = new URL(request.url);
-        const tag = url.searchParams.get('tag');
-        paramsSpy(tag);
-        return HttpResponse.json({ cars: [] });
+      http.get(`${BASE_URL}/api/cars`, () => {
+        return HttpResponse.json({
+          cars: [],
+        });
       })
     );
 
     render(<App />);
 
     const searchInput = screen.getByRole('textbox');
-    await user.type(searchInput, 'red');
-    const option = await screen.findByRole('option', { name: 'red' });
-    expect(option).toBeVisible();
+    await user.type(searchInput, 'ferrari');
 
+    const option = await screen.findByRole('option', { name: 'ferrari' });
     await user.click(option);
-    expect(paramsSpy).toHaveBeenCalledWith('red');
-    await expect(screen.findByText('Search results for : red')).resolves.toBeInTheDocument();
+
+    await expect(screen.findByText('No cars to display')).resolves.toBeInTheDocument();
+    expect(screen.queryAllByRole('img')).toHaveLength(0);
   });
 
   it('renders car images when search results are returned', async () => {
@@ -49,9 +47,9 @@ describe('App.tsx', () => {
       http.get(`${BASE_URL}/api/cars`, () => {
         return HttpResponse.json({
           cars: [
-            { id: '1', url: 'http://example.com/car1' },
-            { id: '2', url: 'http://example.com/car2' },
-            { id: '3', url: 'http://example.com/car3' },
+            { id: '1', url: 'http://example.com/car1', alt_description: 'car1' },
+            { id: '2', url: 'http://example.com/car2', alt_description: 'car1' },
+            { id: '3', url: 'http://example.com/car3', alt_description: 'car1' },
           ],
         });
       })
