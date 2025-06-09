@@ -192,6 +192,8 @@ Password: Motorway
 ### Future Improvements
 
 - Implement pagination or infinite scroll for large result sets
+- Utilize dataset to display information about cars, consider modal approach
 - Add error boundaries for more robust error handling
 - Consider implementing Suspense for smoother loading experiences
+- Utilize service worker for PWA capabilities
 - Add accessibility improvements (keyboard navigation, ARIA attributes)
