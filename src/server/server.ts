@@ -32,8 +32,8 @@ app.get('/api/cars', ({ query }: Request<{}, {}, {}, Query>, res): Promise<Car[]
     res.json({ cars: [], total: 0 });
     return;
   }
-  const pageLimit = limit ? parseInt(limit, 10) : 10;
-  const pageOffset = offset ? parseInt(offset, 10) : 0;
+  const pageLimit = limit ? parseInt(limit) : 10;
+  const pageOffset = offset ? parseInt(offset) : 0;
 
   const paginatedCars = carsByTag.slice(pageOffset, pageOffset + pageLimit);
 

@@ -4,14 +4,21 @@ import { useQuery } from '@tanstack/react-query';
 import styles from './Task2.module.css';
 import SearchIcon from '../../assets/icons/search.svg?react';
 
+type CarsResponse = {
+  cars: { url: string; id: string }[];
+};
+
 const Task2: React.FC = () => {
   const { selection } = useContext(SelectionContext);
 
   const params = new URLSearchParams({ tag: selection, limit: '9' }).toString();
 
-  const { data } = useQuery<{ cars: { url: string; id: string }[] }>({
+  const { data } = useQuery({
     queryKey: ['cars', selection],
-    queryFn: () => fetch(`http://localhost:8000/api/cars?${params}`).then((res) => res.json()),
+    queryFn: async (): Promise<CarsResponse> => {
+      const response = await fetch(`http://localhost:8000/api/cars?${params}`);
+      return response.json();
+    },
     enabled: !!selection,
   });
 
@@ -28,9 +35,7 @@ const Task2: React.FC = () => {
     <>
       {selection && (
         <div className={styles.label}>
-          <h2>
-            Search results for : <strong>{selection}</strong>
-          </h2>
+          <h2>Search results for : {selection}</h2>
         </div>
       )}
       <div className={styles.grid}>

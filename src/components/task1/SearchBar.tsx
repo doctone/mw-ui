@@ -9,14 +9,13 @@ import { useQuery } from '@tanstack/react-query';
 const SearchBar: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const { setSelection } = useContext(SelectionContext);
-  // const [tags, setTags] = useState([]);
   const [isFocused, setIsFocused] = useState(false);
 
   const { refetch: getTags, data: tags } = useQuery({
     queryKey: ['tags', searchTerm],
     queryFn: (data) =>
       fetch(`http://localhost:8000/api/tags?tag=${encodeURIComponent(data.queryKey[1])}`).then((res) => res.json()),
-    enabled: false,
+    enabled: searchTerm?.length >= 2,
   });
 
   const debouncedSearch = useDebouncedCallback((term) => {

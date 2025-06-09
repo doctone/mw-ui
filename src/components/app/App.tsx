@@ -5,7 +5,7 @@ import Task2 from '../task2/Task2';
 import styles from './App.module.scss';
 import { useState } from 'react';
 import { SelectionContext } from './hooks/useSelection';
-
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 /*
  * Available endpoints
  * http://localhost:8000/api/tags - to return all tags in
@@ -20,6 +20,7 @@ const App: React.FC = () => {
   return (
     <SelectionContext.Provider value={{ selection, setSelection }}>
       <QueryClientProvider client={client}>
+        <ReactQueryDevtools client={client} />
         <Header />
         <main className={styles.main}>
           <Task2 />
