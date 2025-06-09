@@ -1,14 +1,14 @@
 import React, { useContext } from 'react';
 import { SelectionContext } from '../app/hooks/useSelection';
 import { useQuery } from '@tanstack/react-query';
-import styles from './Task2.module.css';
+import styles from './CarGrid.module.css';
 import SearchIcon from '../../assets/icons/search.svg?react';
 
 type CarsResponse = {
   cars: { url: string; id: string }[];
 };
 
-const Task2: React.FC = () => {
+const CarGrid: React.FC = () => {
   const { selection } = useContext(SelectionContext);
 
   const params = new URLSearchParams({ tag: selection, limit: '9' }).toString();
@@ -54,4 +54,4 @@ const Task2: React.FC = () => {
   );
 };
 
-export default Task2;
+export default CarGrid;

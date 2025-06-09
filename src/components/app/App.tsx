@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Header from '../header/Header';
-import Task2 from '../task2/Task2';
+import CarGrid from '../task2/CarGrid';
 
 import styles from './App.module.scss';
 import { useState } from 'react';
@@ -23,7 +23,7 @@ const App: React.FC = () => {
         <ReactQueryDevtools client={client} />
         <Header />
         <main className={styles.main}>
-          <Task2 />
+          <CarGrid />
         </main>
       </QueryClientProvider>
     </SelectionContext.Provider>
